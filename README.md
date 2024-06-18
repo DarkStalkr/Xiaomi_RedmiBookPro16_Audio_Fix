@@ -1,14 +1,22 @@
-Audio Fix for Xiaomi RedmiBook 16 on Arch Linux
-Description
+# Audio Fix for Xiaomi RedmiBook 16 on Arch Linux
 
+## Description
 This guide provides detailed steps to fix audio issues on the Xiaomi RedmiBook 16 running Arch Linux. It includes updating system packages, configuring GRUB, loading necessary kernel modules, and enabling required services.
-Prerequisites
 
-    Arch Linux installed on Xiaomi RedmiBook 16
-    Basic knowledge of Linux command line
+## Prerequisites
+- Xiaomi RedmiBook 16 Redmibook Pro
+- Intel Corporation Meteor Lake-P HD Audio Controller (rev 20)
+- Arch Linux (should work in other distros)
 
-Steps
-1. Update System
+
+
+## Steps
+
+0. Check the presence of your built in speakers
+
+       lspci | grep -i audio
+
+2. Update System
 
 Update all system packages to the latest versions.
 
