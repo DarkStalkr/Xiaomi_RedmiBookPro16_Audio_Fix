@@ -1,20 +1,28 @@
-Audio Fix for Xiaomi RedmiBook 16 on Arch Linux
-Description
+# Audio Fix for Xiaomi RedmiBook 16 on Arch Linux
 
+## Description
 This guide provides detailed steps to fix audio issues on the Xiaomi RedmiBook 16 running Arch Linux. It includes updating system packages, configuring GRUB, loading necessary kernel modules, and enabling required services.
-Prerequisites
 
-    Arch Linux installed on Xiaomi RedmiBook 16
-    Basic knowledge of Linux command line
+## Prerequisites
+- Xiaomi RedmiBook 16 Redmibook Pro
+- Intel Corporation Meteor Lake-P HD Audio Controller (rev 20)
+- Arch Linux (should work in other distros)
 
-Steps
-1. Update System
+
+
+## Steps
+
+0. Check the presence of your built in speakers
+
+       lspci | grep -i audio
+
+2. Update System
 
 Update all system packages to the latest versions.
 
 bash
 
-sudo pacman -Syu
+    sudo pacman -Syu
 
 2. Install/Reinstall Required Packages
 
@@ -22,7 +30,7 @@ Install or reinstall necessary packages for audio.
 
 bash
 
-sudo pacman -S linux-firmware alsa-utils sof-firmware pipewire pipewire-alsa pipewire-pulse pipewire-jack wireplumber pavucontrol
+    sudo pacman -S linux-firmware alsa-utils sof-firmware pipewire pipewire-alsa pipewire-pulse pipewire-jack wireplumber pavucontrol
 
 3. Load Kernel Modules
 
@@ -30,8 +38,8 @@ Load the required kernel modules.
 
 bash
 
-sudo modprobe snd-hda-intel
-sudo modprobe snd-sof-pci-intel-mtl
+    sudo modprobe snd-hda-intel
+    sudo modprobe snd-sof-pci-intel-mtl
 
 4. Configure GRUB
 
@@ -39,35 +47,35 @@ Edit the GRUB configuration file to disable dmic_detect for snd_hda_intel.
 
 bash
 
-sudo nano /etc/default/grub
+    sudo nano /etc/default/grub
 
 Change the line:
 
 bash
 
-GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet"
+    GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet"
 
 to:
 
 bash
 
-GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet snd_hda_intel.dmic_detect=0"
+    GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet snd_hda_intel.dmic_detect=0"
 
 Update the GRUB configuration:
 
 bash
 
-sudo grub-mkconfig -o /boot/grub/grub.cfg
+    sudo grub-mkconfig -o /boot/grub/grub.cfg
 
 5. Enable and Start Services
 
 Enable and start the necessary services.
 
 bash
-
-systemctl --user enable wireplumber
-systemctl --user start wireplumber
-systemctl --user restart pipewire pipewire-pulse wireplumber
+    
+    systemctl --user enable wireplumber
+    systemctl --user start wireplumber
+    systemctl --user restart pipewire pipewire-pulse wireplumber
 
 6. Restore ALSA Settings
 
@@ -75,7 +83,7 @@ Restore ALSA settings.
 
 bash
 
-sudo alsactl restore
+    sudo alsactl restore
 
 7. Reboot System
 
@@ -83,7 +91,7 @@ Reboot the system to apply all changes.
 
 bash
 
-sudo reboot
+    sudo reboot
 
 Post-Reboot Checks
 
@@ -100,7 +108,7 @@ Check if audio is working:
 
 bash
 
-aplay /usr/share/sounds/alsa/Front_Center.wav
+    aplay /usr/share/sounds/alsa/Front_Center.wav
 
 9. Troubleshooting
 
@@ -108,7 +116,7 @@ If issues persist, refer to kernel logs for more information:
 
 bash
 
-sudo dmesg | grep -i audio
+    sudo dmesg | grep -i audio
 
 
 References
