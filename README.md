@@ -110,10 +110,14 @@ bash
 
 sudo dmesg | grep -i audio
 
+
 References
 
-    Intel SOF Project - GitHub Issue #4880
+This guide was developed based on discussions and solutions found in the following GitHub issue:
+
+    Intel SOF Project - GitHub Issue #4880 - Special thanks to the contributors for their valuable insights and solutions.
     https://github.com/thesofproject/linux/issues/4880
+    
 
 License
 
