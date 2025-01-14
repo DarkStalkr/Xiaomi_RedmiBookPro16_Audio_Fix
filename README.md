@@ -36,7 +36,6 @@ Install or reinstall necessary packages for audio.
 
 Load the required kernel modules.
 
-bash
 
     sudo modprobe snd-hda-intel
     sudo modprobe snd-sof-pci-intel-mtl
@@ -45,7 +44,6 @@ bash
 
 Edit the GRUB configuration file to disable dmic_detect for snd_hda_intel.
 
-bash
 
     sudo nano /etc/default/grub
 
