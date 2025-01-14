@@ -20,15 +20,15 @@ This guide provides detailed steps to fix audio issues on the Xiaomi RedmiBook 1
 
 Update all system packages to the latest versions.
 
-bash
 
+    sudo apt update && sudo apt upgrade   
     sudo pacman -Syu
 
 2. Install/Reinstall Required Packages
 
 Install or reinstall necessary packages for audio.
 
-bash
+
 
     sudo pacman -S linux-firmware alsa-utils sof-firmware pipewire pipewire-alsa pipewire-pulse pipewire-jack wireplumber pavucontrol
 
@@ -49,21 +49,13 @@ bash
 
     sudo nano /etc/default/grub
 
-Change the line:
+Add the following parameters:
 
-bash
-
-    GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet"
-
-to:
-
-bash
-
-    GRUB_CMDLINE_LINUX_DEFAULT="loglevel=3 quiet snd_hda_intel.dmic_detect=0"
+    GRUB_CMDLINE_LINUX_DEFAULT="snd_hda_intel.dmic_detect=0"
 
 Update the GRUB configuration:
 
-bash
+
 
     sudo grub-mkconfig -o /boot/grub/grub.cfg
 
@@ -71,7 +63,7 @@ bash
 
 Enable and start the necessary services.
 
-bash
+
     
     systemctl --user enable wireplumber
     systemctl --user start wireplumber
@@ -81,7 +73,7 @@ bash
 
 Restore ALSA settings.
 
-bash
+
 
     sudo alsactl restore
 
@@ -89,7 +81,7 @@ bash
 
 Reboot the system to apply all changes.
 
-bash
+
 
     sudo reboot
 
@@ -98,7 +90,7 @@ Post-Reboot Checks
     Verify audio functionality with alsamixer and pavucontrol.
     Confirm services are running:
 
-    bash
+    
 
     systemctl --user status pipewire pipewire-pulse wireplumber
 
@@ -106,7 +98,7 @@ Post-Reboot Checks
 
 Check if audio is working:
 
-bash
+
 
     aplay /usr/share/sounds/alsa/Front_Center.wav
 
@@ -114,7 +106,7 @@ bash
 
 If issues persist, refer to kernel logs for more information:
 
-bash
+
 
     sudo dmesg | grep -i audio
 
